@@ -1,0 +1,137 @@
+#!/usr/bin/env bash
+#
+#      _ _  _____
+#     | | |/ / _ \
+#  _  | | ' / | | |
+# | |_| | . \ |_| |
+#  \___/|_|\_\__\_\
+#
+
+BASE_BUILD_DIR='build'
+
+DDSIM_REPO='https://github.com/iic-jku/ddsim'
+DDSIM_BINARY="${BASE_BUILD_DIR}/ddsim/ddsim_simple"
+
+QMAP_REPO='https://github.com/iic-jku/qmap'
+QMAP_BINARY="echo map"
+
+QCEC_REPO='https://github.com/iic-jku/qcec'
+QCEC_BINARY="${BASE_BUILD_DIR}/qcec/qcec_app"
+
+show_help () {
+  echo "JKQ -- Johannes Kepler Quantum"
+  if [[ -z "$1" ]];  then
+    echo "Usage:"
+    echo "  jkq command arguments..."
+    echo ""
+    echo "Commands:"
+    echo "help"
+    echo "  display this help"
+    echo "build"
+    echo "  build the JKQ tools"
+    echo ""
+    echo "simulate [arguments...]"
+    echo "  run the simulate with the provided arguments (try --help)"
+    echo "mapper [arguments...]"
+    echo "  run the mapper with the provided arguments (try --help)"
+    echo "equivalencecheck [arguments...]"
+    echo "  run the equivalence checker with the provided arguments (try --help)"
+    echo ""
+    echo "The commands may be abbreviated if the abbreviation is unambiguous."
+    exit
+  fi
+
+  case $1 in
+    build|b*)
+    echo "Build all JKQ tools."
+    ;;
+    simulate|s*)
+    run_simulation --help
+    ;;
+    map|m*)
+    run_mapping --help
+    ;;
+    equivalencecheck|e*)
+    run_equivalencecheck --help
+    ;;
+    *)
+    echo "Unknown command ${1}. Type './jkq help' for available commands"
+    exit 1
+  esac
+
+}
+
+
+download_tools () {
+  git clone "${DDSIM_REPO}" || git -C "${DDSIM_REPO}" pull
+  #git clone "${QMAP_REPO}"  || git -C "${QMAP_REPO}" pull
+  git clone "${QCEC_REPO}"  || git -C "${QCEC_REPO}" pull
+}
+
+build_single_tool () {
+  # $1 is the directory name
+  # $2 is the cmake target
+  cmake -DCMAKE_BUILD_TYPE=Release -S "$1" -B "${BASE_BUILD_DIR}/$1"
+  cmake --build "${BASE_BUILD_DIR}/$1" --config Release --target "$2"
+}
+
+build_tools () {
+  download_tools
+
+  build_single_tool "ddsim" "ddsim_simple"
+  #build_single_tool "qmap" "qmap_app"
+  build_single_tool "qcec" "qcec_app"
+}
+
+
+run_simulation () {
+  if [ ! -d "${BASE_BUILD_DIR}/ddsim" ]; then
+    echo "Installing simulator"
+    download_tools
+    build_single_tool "ddsim" "ddsim_simple"
+  fi
+
+  ${DDSIM_BINARY} "$@"
+}
+
+run_mapping () {
+  if [ ! -d "${BASE_BUILD_DIR}/qmap" ]; then
+    echo "Installing mapper"
+    download_tools
+    build_single_tool "qmap" "qmap_app"
+  fi
+  ${QMAP_BINARY} "$@"
+}
+
+run_equivalencecheck () {
+  if [ ! -d "${BASE_BUILD_DIR}/qcec" ]; then
+    echo "Installing equivalence check"
+    download_tools
+    build_single_tool "qcec" "qcec_app"
+  fi
+  ${QCEC_BINARY} "$@"
+}
+
+key="$1"
+shift
+
+case $key in
+  help|h*)
+  show_help "$1"
+  ;;
+  build|b*)
+  build_tools "$@"
+  ;;
+  simulate|s*)
+  run_simulation "$@"
+  ;;
+  map|m*)
+  run_mapping "$@"
+  ;;
+  equivalencecheck|e*)
+  run_equivalencecheck "$@"
+  ;;
+  *)
+  echo "Unknown command ${key}. Type './jkq help' for available commands"
+  exit 1
+esac
