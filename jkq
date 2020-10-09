@@ -31,10 +31,10 @@ show_help () {
     echo "  build the JKQ tools"
     echo ""
     echo "simulate [arguments...]"
-    echo "  run the simulate with the provided arguments (try --help)"
-    echo "mapper [arguments...]"
+    echo "  run the simulator with the provided arguments (try --help)"
+    echo "map [arguments...]"
     echo "  run the mapper with the provided arguments (try --help)"
-    echo "equivalencecheck [arguments...]"
+    echo "verify [arguments...]"
     echo "  run the equivalence checker with the provided arguments (try --help)"
     echo ""
     echo "The commands may be abbreviated if the abbreviation is unambiguous."
@@ -51,8 +51,8 @@ show_help () {
     map|m*)
     run_mapping --help
     ;;
-    equivalencecheck|e*)
-    run_equivalencecheck --help
+    verify|v*)
+    run_verification --help
     ;;
     *)
     echo "Unknown command ${1}. Type './jkq help' for available commands"
@@ -103,7 +103,7 @@ run_mapping () {
   ${QMAP_BINARY} "$@"
 }
 
-run_equivalencecheck () {
+run_verification () {
   if [ ! -d "${BASE_BUILD_DIR}/qcec" ]; then
     echo "Installing equivalence check"
     download_tools
@@ -128,8 +128,8 @@ case $key in
   map|m*)
   run_mapping "$@"
   ;;
-  equivalencecheck|e*)
-  run_equivalencecheck "$@"
+  verify|v*)
+  run_verification "$@"
   ;;
   *)
   echo "Unknown command ${key}. Type './jkq help' for available commands"
