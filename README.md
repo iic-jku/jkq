@@ -1,6 +1,6 @@
-[![Travis (.org)](https://img.shields.io/travis/iic-jku/ddsim?label=JKQ%20DDSIM)](https://travis-ci.com/iic-jku/ddsim)
-[![Travis (.org)](https://img.shields.io/travis/iic-jku/qmap?label=JKQ%20QMAP)](https://travis-ci.com/iic-jku/qmap)
-[![Travis (.org)](https://img.shields.io/travis/iic-jku/qcec?label=JKQ%20QCEC)](https://travis-ci.com/iic-jku/qcec)
+[![Travis (.org)](https://img.shields.io/travis/com/iic-jku/ddsim/master?label=JKQ%20DDSIM)](https://travis-ci.com/iic-jku/ddsim)
+[![Travis (.org)](https://img.shields.io/travis/com/iic-jku/qmap/master?label=JKQ%20QMAP)](https://travis-ci.com/iic-jku/qmap)
+[![Travis (.org)](https://img.shields.io/travis/com/iic-jku/qcec/master?label=JKQ%20QCEC)](https://travis-ci.com/iic-jku/qcec)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![toolset: JKQ](https://img.shields.io/badge/toolset-JKQ-blue)](https://github.com/iic-jku/jkq)
 
@@ -51,7 +51,7 @@ build
   build the JKQ tools
 
 simulate [arguments...]
-  run the simulate with the provided arguments (try --help)
+  run the simulator with the provided arguments (try --help)
 map [arguments...]
   run the mapper with the provided arguments (try --help)
 verify [arguments...]
