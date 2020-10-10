@@ -13,7 +13,8 @@ DDSIM_REPO='https://github.com/iic-jku/ddsim'
 DDSIM_BINARY="${BASE_BUILD_DIR}/ddsim/ddsim_simple"
 
 QMAP_REPO='https://github.com/iic-jku/qmap'
-QMAP_BINARY="echo map"
+QMAP_HEURISTIC_BINARY="${BASE_BUILD_DIR}/qmap/qmap_heuristic"
+QMAP_EXACT_BINARY="${BASE_BUILD_DIR}/qmap/qmap_exact"
 
 QCEC_REPO='https://github.com/iic-jku/qcec'
 QCEC_BINARY="${BASE_BUILD_DIR}/qcec/qcec_app"
@@ -64,7 +65,7 @@ show_help () {
 
 download_tools () {
   git clone "${DDSIM_REPO}" || git -C "${DDSIM_REPO}" pull
-  #git clone "${QMAP_REPO}"  || git -C "${QMAP_REPO}" pull
+  git clone "${QMAP_REPO}"  || git -C "${QMAP_REPO}" pull
   git clone "${QCEC_REPO}"  || git -C "${QCEC_REPO}" pull
 }
 
@@ -79,7 +80,8 @@ build_tools () {
   download_tools
 
   build_single_tool "ddsim" "ddsim_simple"
-  #build_single_tool "qmap" "qmap_app"
+  build_single_tool "qmap" "qmap_heuristic"
+  build_single_tool "qmap" "qmap_exact"
   build_single_tool "qcec" "qcec_app"
 }
 
@@ -98,9 +100,24 @@ run_mapping () {
   if [ ! -d "${BASE_BUILD_DIR}/qmap" ]; then
     echo "Installing mapper"
     download_tools
-    build_single_tool "qmap" "qmap_app"
+    build_single_tool "qmap" "qmap_heuristic"
+	  build_single_tool "qmap" "qmap_exact"
   fi
-  ${QMAP_BINARY} "$@"
+  if [[ $* == *"--method e"* ]]; then
+    for arg do
+      shift
+      [[ "$arg" = "--method" || "$arg" = "exact" ]] && continue
+      set -- "$@" "$arg"
+    done
+	  ${QMAP_EXACT_BINARY} "$@"
+  else
+    for arg do
+      shift
+      [[ "$arg" = "--method" || "$arg" = "heuristic" ]] && continue
+      set -- "$@" "$arg"
+    done
+	  ${QMAP_HEURISTIC_BINARY} "$@"
+  fi
 }
 
 run_verification () {

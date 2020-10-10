@@ -69,6 +69,7 @@ Using the `jkq` script has the following requirements:
 - [cmake >= 3.10](https://cmake.org/)
 - C++14 compatible compiler (our programs are continuously tested using gcc-7.4, gcc-10, clang-9, AppleClang, and MSVC 15.9)
 - [boost >= 1.50](https://www.boost.org/) (having the [program_options](https://www.boost.org/doc/libs/1_74_0/doc/html/program_options.html) suffices)
+- [z3 >= 4.8.3](https://github.com/Z3Prover/z3) if you want to use the exact mapping tool
 
 ## References
 
