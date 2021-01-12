@@ -1,9 +1,8 @@
-[![Travis (.org)](https://img.shields.io/travis/com/iic-jku/ddsim/master?label=JKQ%20DDSIM)](https://travis-ci.com/iic-jku/ddsim)
-[![Travis (.org)](https://img.shields.io/travis/com/iic-jku/qmap/master?label=JKQ%20QMAP)](https://travis-ci.com/iic-jku/qmap)
-[![Travis (.org)](https://img.shields.io/travis/com/iic-jku/qcec/master?label=JKQ%20QCEC)](https://travis-ci.com/iic-jku/qcec)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![toolset: JKQ](https://img.shields.io/badge/toolset-JKQ-blue)](https://github.com/iic-jku/jkq)
-
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/iic-jku/ddsim/continuous%20integration?label=JKQ%20DDSIM&logo=github&style=plastic)](https://github.com/iic-jku/ddsim/actions?query=workflow%3A%22continuous+integration%22)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/iic-jku/qmap/CI?label=JKQ%20QMAP&logo=github&style=plastic)](https://github.com/iic-jku/qmap/actions?query=workflow%3A%22CI%22)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/iic-jku/qcec/CI?label=JKQ%20QCEC&logo=github&style=plastic)](https://github.com/iic-jku/qcec/actions?query=workflow%3A%22CI%22)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=plastic)](https://opensource.org/licenses/MIT)
+[![toolset: JKQ](https://img.shields.io/badge/toolset-JKQ-blue?style=plastic)](https://github.com/iic-jku/jkq)
 
 # JKQ - An open-source toolset for design automation for quantum computing
 
@@ -67,7 +66,7 @@ Using the `jkq` script has the following requirements:
 - [bash](https://www.gnu.org/software/bash/)
 - [git](https://git-scm.com/)
 - [cmake >= 3.10](https://cmake.org/)
-- C++14 compatible compiler (our programs are continuously tested using gcc-7.4, gcc-10, clang-9, AppleClang, and MSVC 15.9)
+- C++14 compatible compiler (our programs are continuously tested under Linux, MacOS, and Windows using the [latest available system versions for GitHub Actions](https://github.com/actions/virtual-environments))
 - [boost >= 1.50](https://www.boost.org/) (having the [program_options](https://www.boost.org/doc/libs/1_74_0/doc/html/program_options.html) suffices)
 - [z3 >= 4.8.3](https://github.com/Z3Prover/z3) if you want to use the exact mapping tool
 
